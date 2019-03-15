@@ -13,7 +13,7 @@ disp('Done recording');
 % Playback the recording
 % play(recObj);
 
-% Andre is a dingus
+% Andre is a dingus +1
 
 % Get the audio data
 y1 = getaudiodata(recObj);
@@ -115,6 +115,10 @@ min_freq = F(row)
 % plot(row_inds)
 
 max_ind_std = std(row_inds)
+=======
+%% Spectrogram plotter
+                              %speech,   fs,      T,        w, nfft,     Slim, alpha, cmap, cbar, type)
+[spec, plot_handle] = myspectrogram(y, 8000, [18 1], @hamming, 2048, [-45 -2], false, 'jet', true, 'lp');
 
 % Compute the std in terms of freq
 max_freq_vec = F(row_inds);
