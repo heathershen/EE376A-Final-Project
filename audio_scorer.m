@@ -13,7 +13,8 @@ disp('Done recording');
 % Playback the recording
 % play(recObj);
 
-% Andre is a dingus
+
+
 
 % Get the audio data
 y1 = getaudiodata(recObj);
@@ -23,6 +24,7 @@ y1 = getaudiodata(recObj);
 %% Plot the spectrogram using the function, also get the spectrogram values before they are changed to powers
 [spec, Smin, Smax, T, F, s_abs] = myspectrogram_test(y1);
 colorbar();
+
 colormap('parula');
 s = s_abs;
 %% Exploring appropriate threshold percentile
@@ -128,6 +130,50 @@ max_freq_filt_vec = F(row_inds_filt);
 max_freq_filt_std = std(max_freq_filt_vec)
 
 %% Count the number of periods of silence
+
+perctile_thresh = 1;
+thresh_val = prctile(s(:), perctile_thresh);
+
+s_thresh = s;
+s_thresh(s_thresh <= thresh_val) = 0;
+s_thresh_sum = sum(s_thresh);
+
+% imagesc(s)
+% axis('xy')
+% colorbar()
+% colormap('parula')
+% title('Original');
+% 
+% figure
+% imagesc(s_thresh)
+% axis('xy')
+% colorbar()
+% colormap('parula')
+% title('Thresholded');
+
+[F, T] = size(s_thresh);
+num_silences = 1;
+
+
+t = 1;
+while t <= T
+    if s_thresh_sum(t) == 0
+        for t_new = t:T
+            if s_thresh_sum(t_new) ~= 0
+                t = t_new;
+                num_silences = num_silences + 1;
+                break;
+            end
+        end
+    end
+    t = t + 1;
+end
+num_silences                
+            
+            
+        
+        
+        
 
 
 
